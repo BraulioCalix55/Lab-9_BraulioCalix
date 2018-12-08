@@ -21,6 +21,8 @@ public class Guiprincipal extends javax.swing.JFrame {
     public Guiprincipal() {
 
         initComponents();
+        hil = new Hilo(BARRA);
+
     }
 
     /**
@@ -61,7 +63,7 @@ public class Guiprincipal extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         creacion = new javax.swing.JButton();
         simulacion = new javax.swing.JDialog();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        BARRA = new javax.swing.JProgressBar();
         inicio = new javax.swing.JLabel();
         destino = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -210,7 +212,9 @@ public class Guiprincipal extends javax.swing.JFrame {
                 .addContainerGap(52, Short.MAX_VALUE))
         );
 
-        parada_angulo.setModel(new javax.swing.SpinnerNumberModel(0, 0, 360, 1));
+        parada_dis.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 100.0d, 1.0d));
+
+        parada_angulo.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 360.0d, 1.0d));
 
         jLabel9.setText("angulo");
 
@@ -237,14 +241,10 @@ public class Guiprincipal extends javax.swing.JFrame {
                     .addComponent(parada_nom))
                 .addGap(30, 30, 30)
                 .addGroup(crear_paradaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(crear_paradaLayout.createSequentialGroup()
-                        .addGroup(crear_paradaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(crear_paradaLayout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(68, 203, Short.MAX_VALUE))))
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel9))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, crear_paradaLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(creacion)
@@ -328,7 +328,7 @@ public class Guiprincipal extends javax.swing.JFrame {
                 .addGroup(simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, simulacionLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BARRA, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(destino)
                         .addGap(132, 132, 132))
@@ -345,7 +345,7 @@ public class Guiprincipal extends javax.swing.JFrame {
                 .addGroup(simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(simulacionLayout.createSequentialGroup()
                         .addGap(102, 102, 102)
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(BARRA, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(simulacionLayout.createSequentialGroup()
                         .addGap(88, 88, 88)
                         .addGroup(simulacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -489,6 +489,9 @@ public class Guiprincipal extends javax.swing.JFrame {
         if (para.size() == 0) {
             JOptionPane.showMessageDialog(this, "no se puede ingresar sin crear paradas antes");
         } else {
+            DefaultComboBoxModel modelo = new DefaultComboBoxModel(para.toArray());
+
+            alum_parada.setModel(modelo);
             crear_estudiante.setModal(true);
             crear_estudiante.pack();
             crear_estudiante.setVisible(true);
@@ -569,6 +572,9 @@ public class Guiprincipal extends javax.swing.JFrame {
                 int posicion = combo_bus.getSelectedIndex();
                 JOptionPane.showMessageDialog(this, "el bus de placa: " + bus.get(posicion).getPlaca() + "va a salir con todos los alumnos");
                 seleccionado = bus.get(posicion);
+                simulacion.setModal(true);
+                simulacion.pack();
+                simulacion.setVisible(true);
             }
 
         }
@@ -596,9 +602,17 @@ public class Guiprincipal extends javax.swing.JFrame {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
-        if (temp.size()>0) {
+        if (temp.size() > 0) {
             JOptionPane.showMessageDialog(simulacion, "la simulacion empezara");
+            hil.setBus(seleccionado);
+            hil.setDestino(destino);
+            hil.setInicio(inicio);
+            hil.setEst(temp);
+            hil.setTabla(jTable1);
+            hil.start();
         }
+        //temp, inicio, destino,jTable1
+
     }//GEN-LAST:event_jButton2MouseClicked
 
     /**
@@ -638,6 +652,7 @@ public class Guiprincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Alumnos_dispo1;
+    private javax.swing.JProgressBar BARRA;
     private javax.swing.JButton BotonBus;
     private javax.swing.JButton agregabus;
     private javax.swing.JDialog agregalumno;
@@ -676,7 +691,6 @@ public class Guiprincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JSpinner parada_angulo;
@@ -691,4 +705,6 @@ public class Guiprincipal extends javax.swing.JFrame {
     //calcular tiempo entre las paradas
     ArrayList<estudiantes> temp = new ArrayList<>();
     autobus seleccionado;
+    Hilo hil;
+
 }

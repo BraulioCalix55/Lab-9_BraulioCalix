@@ -28,6 +28,22 @@ public class parada {
         this.cordy = cordy;
     }
 
+    public double getCordx() {
+        return cordx;
+    }
+
+    public void setCordx(double cordx) {
+        this.cordx = cordx;
+    }
+
+    public double getCordy() {
+        return cordy;
+    }
+
+    public void setCordy(double cordy) {
+        this.cordy = cordy;
+    }
+
     
 
     public String getNombre() {
@@ -64,7 +80,7 @@ public class parada {
 
     @Override
     public String toString() {
-        return "parada{" + "nombre=" + nombre + ", distancia=" + distancia + ", angulo=" + angulo + ", cordx=" + cordx + ", cordy=" + cordy + '}';
+        return nombre ;
     }
 
 }

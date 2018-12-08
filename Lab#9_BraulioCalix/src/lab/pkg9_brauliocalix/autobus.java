@@ -18,6 +18,10 @@ public class autobus {
     private double velocidad;
     private ArrayList<estudiantes> estud= new ArrayList();
 
+    public autobus() {
+    }
+    
+
     public autobus(String id, String placa, String Color, double velocidad) {
         this.id = id;
         this.placa = placa;
